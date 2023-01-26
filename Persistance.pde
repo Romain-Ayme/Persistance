@@ -1,3 +1,7 @@
+import processing.sound.*;
+
+SoundFile soundfile;
+
 PGraphics imgDraw;
 PGraphics[] drawings;
 
@@ -29,7 +33,9 @@ void setup() {
   imgDraw.strokeWeight(strokeWeight);
   imgDraw.fill(255);
   imgDraw.endDraw();
-  
+
+
+  soundfile = new SoundFile(this, "pierre.aiff");
 }
 
 void draw() {
@@ -41,6 +47,19 @@ void draw() {
       imgDraw.endDraw();
   
       image(imgDraw, 0, 0);
+
+      if (!soundfile.isPlaying()) {
+        soundfile.loop();
+      }
+
+    } 
+    
+    if (!mousePressed) {
+
+      if (soundfile.isPlaying()) {
+        soundfile.pause();
+      }
+
     }
   }
 
