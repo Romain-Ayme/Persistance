@@ -16,7 +16,10 @@ long startFadeTime;
 color strokeColor;
 int strokeWeight;
 
+PrintWriter output;
 int nb = 0;
+
+String configFile = "nb.txt";
 
 void setup() {
   isDrawingTime = true;
@@ -34,8 +37,14 @@ void setup() {
   imgDraw.fill(255);
   imgDraw.endDraw();
 
-
   soundfile = new SoundFile(this, "sounds/pierre.aiff");
+ 
+  try {
+    String[] lines = loadStrings(configFile);
+    nb = int(lines[0]);
+  } catch (Exception e) {
+    nb = 0;
+  }
 }
 
 void draw() {
@@ -79,13 +88,18 @@ void keyPressed() {
   if (isDrawingTime) {
     isDrawingTime = false;
 
-    imgDraw.save("img" + ++nb + ".png");
+    imgDraw.save("img/img" + ++nb + ".png");
 
     imgDraw.clear();
     background(0);
 
+    output = createWriter(configFile);
+    output.println(nb);
+    output.flush();
+    output.close();
+
     for (int i = 1; i <= nb; i++) {
-      img = loadImage("img" + i + ".png");
+      img = loadImage("img/img" + i + ".png");
       imgShow.beginDraw();
       imgShow.background(255, 255, 255, 0); // fond transparent
       imgShow.image(img, 0, 0);
