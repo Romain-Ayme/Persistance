@@ -35,7 +35,7 @@ void setup() {
   imgDraw.endDraw();
 
 
-  soundfile = new SoundFile(this, "pierre.aiff");
+  soundfile = new SoundFile(this, "sounds/pierre.aiff");
 }
 
 void draw() {
