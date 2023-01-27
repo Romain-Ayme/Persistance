@@ -60,13 +60,13 @@ void keyPressed() {
   if (isDrawingTime) {
     isDrawingTime = false;
 
-    imgDraw.save("img" + ++nb + ".png");
+    imgDraw.save("img/img" + ++nb + ".png");
 
     imgDraw.clear();
     background(0);
 
     for (int i = 1; i <= nb; i++) {
-      img = loadImage("img" + i + ".png");
+      img = loadImage("img/img" + i + ".png");
       imgShow.beginDraw();
       imgShow.background(255, 255, 255, 0); // fond transparent
       imgShow.image(img, 0, 0);
