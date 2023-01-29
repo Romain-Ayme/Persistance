@@ -27,6 +27,7 @@ void setup() {
   strokeWeight = 5;
   
   size(800, 600);
+  //fullScreen();
   imgDraw = createGraphics(width, height);
   imgShow = createGraphics(width, height);
   background(0);
