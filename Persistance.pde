@@ -21,6 +21,10 @@ int nb = 0;
 
 String configFile = "nb.txt";
 
+String word = "Draw me";
+boolean isWord = true;
+
+
 void setup() {
   isDrawingTime = true;
   strokeColor = color(255, 0, 0);
@@ -39,6 +43,10 @@ void setup() {
   imgDraw.endDraw();
 
   soundfile = new SoundFile(this, "sounds/pierre.aiff");
+
+  textSize(32);
+  textAlign(CENTER, CENTER);
+  textLeading(-10);
  
   try {
     String[] lines = loadStrings(configFile);
@@ -51,6 +59,10 @@ void setup() {
 void draw() {
   if (isDrawingTime) {
     if (mousePressed) {
+      
+      if (!isWord) {
+        background(0);
+      } 
       
       imgDraw.beginDraw();
       imgDraw.line(mouseX, mouseY, pmouseX, pmouseY);
@@ -70,10 +82,28 @@ void draw() {
         soundfile.pause();
       }
 
+      if (isWord) {
+        background(0);
+        for (int i = 0; i < word.length(); i++) {
+          int x = width / 2 - (word.length() / 2) *20 +i * 20;
+          if (frameCount < (i+1)*8) {
+            text(floor(random(10)), x, height / 2);
+          } else {
+            text(word.charAt(i), x, height /2);
+            if (i == word.length() - 1 ) {
+              isWord = false;
+            }
+          }
+        }
+      }
+
     }
   }
 
   if (!isDrawingTime) {
+    
+    isWord = true;
+
     if (millis() - startShowTime > 5000) {
       
       imgDraw.clear();
@@ -82,11 +112,14 @@ void draw() {
       
       isDrawingTime = true;
     }
+
   }
+
 }
 
 void keyPressed() {
   if (isDrawingTime) {
+    
     isDrawingTime = false;
 
     imgDraw.save("img/img" + ++nb + ".png");
@@ -107,7 +140,6 @@ void keyPressed() {
       imgShow.endDraw();
       image(imgShow, 0, 0);
   }
-
     startShowTime = millis();
   }
 }
