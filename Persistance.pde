@@ -22,6 +22,8 @@ int nb = 0;
 String configFile = "nb.txt";
 
 void setup() {
+  cursor(CROSS);
+  
   isDrawingTime = true;
   strokeColor = color(255, 0, 0);
   strokeWeight = 5;
