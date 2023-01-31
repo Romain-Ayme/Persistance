@@ -24,8 +24,9 @@ String configFile = "nb.txt";
 String word = "Draw me";
 boolean isWord = true;
 
-
 void setup() {
+  cursor(CROSS);
+  
   isDrawingTime = true;
   strokeColor = color(255, 0, 0);
   strokeWeight = 5;
@@ -42,7 +43,7 @@ void setup() {
   imgDraw.fill(255);
   imgDraw.endDraw();
 
-  soundfile = new SoundFile(this, "sounds/pierre.aiff");
+  soundfile = new SoundFile(this, "sounds/ES_Pick Axe Rock - SFX Producer.aiff");
 
   textSize(32);
   textAlign(CENTER, CENTER);
