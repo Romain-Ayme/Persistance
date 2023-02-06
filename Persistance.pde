@@ -1,9 +1,14 @@
 import processing.sound.*;
 
+import oscP5.*;
+import netP5.*;
+
+OscP5 oscP5;
+int port = 12000;
+
 SoundFile soundfile;
 
 PGraphics imgDraw;
-PGraphics[] drawings;
 
 PImage img;
 PGraphics imgShow;
@@ -22,10 +27,13 @@ int nb = 0;
 String configFile = "nb.txt";
 
 void setup() {
+  
+  oscP5 = new OscP5(this, port);
+  
   cursor(CROSS);
   
   isDrawingTime = true;
-  strokeColor = color(255, 0, 0);
+  strokeColor = color(251, 240, 0);
   strokeWeight = 5;
   
   size(800, 600);
@@ -47,6 +55,7 @@ void setup() {
   } catch (Exception e) {
     nb = 0;
   }
+  
 }
 
 void draw() {
@@ -121,5 +130,22 @@ void keyPressed() {
       default :
       break;	
     }
+  }
+}
+
+void oscEvent(OscMessage theOscMessage) {
+  if(theOscMessage.checkAddrPattern("/Persistance_color")) {
+    print("### received an osc message.");
+    int strokeColorR = theOscMessage.get(0).intValue();
+    int strokeColorG = theOscMessage.get(1).intValue();
+    int strokeColorB = theOscMessage.get(2).intValue();
+    
+    println("color("+strokeColorR+", "+strokeColorG+", "+strokeColorB+")");
+    
+    strokeColor = color(strokeColorR, strokeColorG, strokeColorB);
+          
+    imgDraw.beginDraw();
+    imgDraw.stroke(strokeColor);
+    imgDraw.endDraw();
   }
 }
