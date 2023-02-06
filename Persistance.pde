@@ -88,27 +88,38 @@ void draw() {
 
 void keyPressed() {
   if (isDrawingTime) {
-    isDrawingTime = false;
+    switch (key) {
+      case 'c' :
+        isDrawingTime = false;
 
-    imgDraw.save("img/img" + ++nb + ".png");
+        imgDraw.save("img/img" + ++nb + ".png");
 
-    imgDraw.clear();
-    background(0);
+        imgDraw.clear();
+        background(0);
 
-    output = createWriter(configFile);
-    output.println(nb);
-    output.flush();
-    output.close();
+        output = createWriter(configFile);
+        output.println(nb);
+        output.flush();
+        output.close();
 
-    for (int i = 1; i <= nb; i++) {
-      img = loadImage("img/img" + i + ".png");
-      imgShow.beginDraw();
-      imgShow.background(255, 255, 255, 0); // fond transparent
-      imgShow.image(img, 0, 0);
-      imgShow.endDraw();
-      image(imgShow, 0, 0);
-  }
+        for (int i = 1; i <= nb; i++) {
+          img = loadImage("img/img" + i + ".png");
+          imgShow.beginDraw();
+          imgShow.background(255, 255, 255, 0); // fond transparent
+          imgShow.image(img, 0, 0);
+          imgShow.endDraw();
+          image(imgShow, 0, 0);
+        }
+        startShowTime = millis();   
+      break;
 
-    startShowTime = millis();
+      case ESC :
+        println("Close program");
+        exit();
+      break;
+
+      default :
+      break;	
+    }
   }
 }
