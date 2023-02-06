@@ -26,6 +26,9 @@ int nb = 0;
 
 String configFile = "nb.txt";
 
+String word = "Draw me";
+boolean isWord = true;
+
 void setup() {
   
   oscP5 = new OscP5(this, port);
@@ -55,13 +58,22 @@ void setup() {
   } catch (Exception e) {
     nb = 0;
   }
+
+  textSize(32);
+  textAlign(CENTER, CENTER);
+  textLeading(-10);
   
 }
 
 void draw() {
   if (isDrawingTime) {
+
     if (mousePressed) {
       
+      if (!isWord) {
+        background(0);
+      }
+
       imgDraw.beginDraw();
       imgDraw.line(mouseX, mouseY, pmouseX, pmouseY);
       imgDraw.endDraw();
@@ -80,10 +92,28 @@ void draw() {
         soundfile.pause();
       }
 
+      if (isWord) {
+        background(0);
+        for (int i = 0; i < word.length(); i++) {
+          int x = width / 2 - (word.length() / 2) *20 +i * 20;
+          if (frameCount < (i+1)*8) {
+            text(floor(random(10)), x, height / 2);
+          } else {
+            text(word.charAt(i), x, height /2);
+            if (i == word.length() - 1 ) {
+              isWord = false;
+            }
+          }
+        }
+      }
+
     }
   }
 
   if (!isDrawingTime) {
+
+    isWord = true;
+
     if (millis() - startShowTime > 5000) {
       
       imgDraw.clear();
