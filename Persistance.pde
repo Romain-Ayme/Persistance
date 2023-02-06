@@ -113,6 +113,7 @@ void draw() {
   if (!isDrawingTime) {
 
     isWord = true;
+    frameCount = 0;
 
     if (millis() - startShowTime > 5000) {
       
